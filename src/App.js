@@ -13,14 +13,13 @@ class App extends Component {
 
   handleAddItem = item => {
     this.setState(oldState => ({
-      items: [...oldState.items, this.state.item],
+      items: [...oldState.items, item],
     }));
   };
 
-  deleteLastItem = event => {
+  handleDeleteItem = () => {
     this.setState(prevState => ({ items: this.state.items.slice(0, -1) }));
   };
-
 
   noItemsFound = () => {
     return this.state.items.length === 0;
@@ -35,16 +34,11 @@ class App extends Component {
         </header>
         <h2>Shopping List</h2>
         <AddItem onAddItem={this.handleAddItem}/>
-         
+        <DeleteItem onDeleteItem={this.handleDeleteItem} noItemsFound={this.noItemsFound}/> 
 
-        <button onClick={this.deleteLastItem} disabled={this.noItemsFound()}>
-          Delete Last Item
-        </button>
 
         <p className="items">Items</p>
-        <ol className="item-list">
-          {this.state.items.map((item, index) => <li key={index}>{item}</li>)}
-        </ol>
+        <ListItems items={this.state.items}/>
       </div>
     );
   }
